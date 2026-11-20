@@ -1,0 +1,54 @@
+:root{--ink:#0c2217;--gold:#f0b429;--cream:#f8f1df;--serif:"Cormorant Garamond",Georgia,serif;--sans:"Be Vietnam Pro",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);font-weight:300;overflow:hidden}
+.stage{perspective:1600px;position:relative;height:100%;overflow:hidden;cursor:pointer}
+.bg{position:absolute;inset:-6%;background:linear-gradient(rgba(8,28,18,.8),rgba(8,28,18,.93)),var(--photo) center/cover;filter:blur(14px);animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.08) translate(-1.5%,1%)}}
+.petals{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.fx{position:absolute;inset:0;z-index:10;pointer-events:none;overflow:hidden}
+
+.scene{position:absolute;inset:0;display:none;align-items:center;justify-content:center;gap:clamp(1.5rem,5vw,4.5rem);padding:2rem 2rem 4rem}
+.scene.on{display:flex}
+.scene.top{z-index:2}
+.cover{flex-direction:column;text-align:center;gap:1.2rem}
+.split.rev{flex-direction:row-reverse}
+
+h1{font:italic 600 clamp(2.6rem,9vw,6rem)/1.05 var(--serif);max-width:12em}
+h2{font:italic 600 clamp(2rem,5.5vw,3.6rem)/1.1 var(--serif);color:var(--gold);margin-bottom:1rem}
+.t{font:500 clamp(1.1rem,2.4vw,1.6rem)/1.55 var(--serif);max-width:27em}
+.date{font:500 clamp(1.3rem,3.5vw,2rem) var(--serif);color:var(--gold);letter-spacing:.08em}
+.sign{font:italic 500 clamp(1.3rem,3vw,1.9rem) var(--serif);color:var(--gold);margin-top:.5rem}
+.btn{margin-top:.8rem;padding:.9rem 2.4rem;border:0;border-radius:999px;background:var(--gold);color:var(--ink);font:400 1rem var(--sans);cursor:pointer}
+.btn:focus-visible,.mute:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+
+/* words rise out of a blur, one after another */
+.w{display:inline-block;opacity:0}
+.on .w{animation:wd .9s both;animation-delay:calc(var(--i)*60ms + .4s)}
+@keyframes wd{from{opacity:0;transform:translateY(.55em);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}
+
+.ph{flex:none;width:min(34vw,330px);aspect-ratio:3/4;overflow:hidden;border-radius:999px 999px 18px 18px;border:3px solid var(--gold);box-shadow:0 0 0 10px rgba(240,180,41,.15),0 20px 60px rgba(0,0,0,.5)}
+.ph.sq{aspect-ratio:1;border-radius:50%}
+.ph.wd{width:min(40vw,400px);aspect-ratio:4/3;border-radius:24px}
+.ph img,.round{width:100%;height:100%;object-fit:cover;display:block}
+.ph img{animation:kb 14s ease-out both}
+@keyframes kb{from{transform:scale(1.18)}to{transform:scale(1)}}
+.round{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);object-position:50% 12%}
+
+.dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;z-index:11}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--cream);opacity:.3;transition:.6s}
+.dots i.on{opacity:1;background:var(--gold);transform:scale(1.4)}
+.mute{position:absolute;top:1rem;right:1rem;z-index:11;width:44px;height:44px;border:1px solid rgba(248,241,223,.4);border-radius:50%;background:rgba(0,0,0,.25);color:var(--cream);font-size:1.1rem;cursor:pointer}
+
+@media (max-width:759px){
+ .scene{flex-direction:column!important;text-align:center;gap:1.1rem;padding:1.5rem 1.5rem 3.5rem}
+ .ph,.ph.wd{width:min(44vw,190px)}
+ .ph.wd{width:min(62vw,250px)}
+}
+@media (prefers-reduced-motion:reduce){.bg,.seed,.ph img{animation:none}.w{opacity:1;animation:none!important}}
+
+/* dandelion seeds: ambient + used in the "blow" transition */
+.seed{position:absolute;width:var(--z);height:var(--z);border:1px dashed rgba(255,255,255,.85);border-radius:50%;background:radial-gradient(circle,#fff 0 22%,transparent 24%)}
+.petals .seed{bottom:-6%;opacity:.65;animation:blow var(--d) linear var(--l) infinite}
+@keyframes blow{to{transform:translate(var(--x),-112vh) rotate(540deg)}}
+.cover .t{text-align:center}
